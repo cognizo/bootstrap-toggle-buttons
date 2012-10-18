@@ -142,9 +142,14 @@
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
-                $element.stop().animate({'left': active ? '0' : '-50%'}, $toggleButton.data('transitionSpeed'));
-
                 options = $toggleButton.data('options');
+
+                if (!skipOnChange && !options.beforeChange($element, !active, e)) {
+                  $(this).prop('checked', !active);
+                  return;
+                }
+
+                $element.stop().animate({'left': active ? '0' : '-50%'}, $toggleButton.data('transitionSpeed'));
 
                 if (!skipOnChange)
                   options.onChange($element, active, e);
@@ -242,6 +247,7 @@
   $.fn.toggleButtons.defaults = {
     onChange: function () {
     },
+    beforeChange: function() { return true; },
     width: 100,
     height: 25,
     font: {},
