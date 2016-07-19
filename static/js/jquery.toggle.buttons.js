@@ -145,7 +145,7 @@
                 options = $toggleButton.data('options');
 
                 if (!skipOnChange && !options.beforeChange($element, !active, e)) {
-                  $(this).prop('checked', !active);
+                  $(this).attr('checked', !active);
                   return;
                 }
 
